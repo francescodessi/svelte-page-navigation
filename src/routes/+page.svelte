@@ -1,3 +1,24 @@
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import Paginator from '$lib/components/Paginator.svelte';
+
+	let currentPage = 0;
+
+	function pageChangeHandler(event) {
+		currentPage = event.detail.page;
+	}
+
+</script>
+
+<div>
+	Current Page: {currentPage}
+</div>
+
+<Paginator on:change={pageChangeHandler}></Paginator>
+
+<style>
+	div {
+		text-align: center;
+		font-size: 2.5rem;
+		margin: 2rem auto;
+	}
+</style>
