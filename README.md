@@ -96,7 +96,7 @@ The `Paginator` component is the main component that implements pagination and p
 * **`currentPage`**: a number indicating the current page (Zero-based numbering). Its default value is `0`.
 * **`initChunkSize`**: a number indicating the size of page grouping. If this number is smaller than the total number of pages and the available space is sufficient, then the page navigation buttons will be displayed in groups of size equal to `initChunkSize`. Its default value is equal to the total number of pages set with the `pages` property.
 * **`initShowFirstButton`**: a boolean that, when set to `true`, enables displaying a button to directly navigate to the first page. The default value is `true`.
-* **`initShowLastButton`**:: a boolean that, when set to `true`, enables displaying a button to directly navigate to the last page. The default value is `true`.
+* **`initShowLastButton`**: a boolean that, when set to `true`, enables displaying a button to directly navigate to the last page. The default value is `true`.
 * **`customPaginatorButton`**: it allows to specify a custom component that represents the button used by `Paginator` component.
 
 If there is enough available space, the `Paginator` component will display all the buttons for the pages (based on the values set for the `pages` and `currentPage` properties). Otherwise, it will automatically reduce the number of visible buttons.
