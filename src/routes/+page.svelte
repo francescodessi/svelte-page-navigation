@@ -13,7 +13,7 @@
 	Current Page: {currentPage}
 </div>
 
-<Paginator on:change={pageChangeHandler}></Paginator>
+<Paginator on:change={pageChangeHandler} />
 
 <style>
 	div {
