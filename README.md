@@ -110,10 +110,10 @@ Below is a basic example:
 	import {Paginator} from '@dflare/svelte-page-navigation';
 	
 	let pages = 20;
-    let currentPage = 0; // It can be omitted if you want to use the default value of 0 
-    let initChunkSize = 10;
-    let initShowFirstButton = true; // It can be omitted if you want to use the default value of true 
-    let initShowLastButton = true; // It can be omitted if you want to use the default value of true 
+	let currentPage = 0; // It can be omitted if you want to use the default value of 0 
+	let initChunkSize = 10;
+	let initShowFirstButton = true; // It can be omitted if you want to use the default value of true 
+	let initShowLastButton = true; // It can be omitted if you want to use the default value of true 
 
 	function pageChangeHandler(event) {
 		currentPage = event.detail.page;
@@ -132,6 +132,7 @@ Below is a basic example:
 	initShowLastButton={initShowLastButton}
 	on:change={pageChangeHandler} />
 ```
+
 <p align="right">(<a href="https://svelte.dev/repl/9aaf93575c8f45c2ae5525f6f1dc3874?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 
