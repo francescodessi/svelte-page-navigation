@@ -99,7 +99,7 @@ The `Paginator` component is the main component that implements pagination and p
 * **`initShowLastButton`**: a boolean that, when set to `true`, enables displaying a button to directly navigate to the last page. The default value is `true`.
 * **`customPaginatorButton`**: it allows to specify a custom component that represents the button used by `Paginator` component.
 
-If there is enough available space, the `Paginator` component will display all the buttons for the pages (based on the values set for the `pages` and `currentPage` properties). Otherwise, it will automatically reduce the number of visible buttons.
+If there is enough available space, the `Paginator` component will display all the buttons for the pages (based on the values set for the `pages` and `initChunkSize` properties). Otherwise, it will automatically reduce the number of visible buttons.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
