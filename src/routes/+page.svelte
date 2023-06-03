@@ -10,7 +10,7 @@
 </script>
 
 <div>
-	Current Page: {currentPage}
+	Current Page: {currentPage + 1}
 </div>
 
 <Paginator on:change={pageChangeHandler} />
