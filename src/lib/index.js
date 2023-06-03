@@ -1,1 +1,2 @@
-// Reexport your entry components here
+import Paginator from './components/Paginator.svelte';
+export {Paginator};

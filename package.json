@@ -1,6 +1,26 @@
 {
-	"name": "svelte-page-navigation",
+	"name": "@dflare/svelte-page-navigation",
 	"version": "0.0.1",
+	"description": "A simple Svelte component to handle pagination",
+	"keywords": [
+		"pagination",
+		"Svelte",
+		"SvelteKit",
+		"svelte-kit",
+		"svelte-component"
+	],
+	"homepage": "https://francescodessi.github.io/svelte-page-navigation/",
+	"license": "MIT",
+	"author": {
+		"name": "Francesco Dessì"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/francescodessi/svelte-page-navigation"
+	},
+	"bugs": {
+		"url": "https://github.com/francescodessi/svelte-page-navigation/issues"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -26,6 +46,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
+		"@sveltejs/adapter-static": "^2.0.2",
 		"@sveltejs/kit": "^1.5.0",
 		"@sveltejs/package": "^2.0.0",
 		"eslint": "^8.28.0",
