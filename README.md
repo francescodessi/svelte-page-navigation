@@ -134,7 +134,7 @@ If there is enough available space, the `Paginator` component will display all t
 	initChunkSize={initChunkSize}
 	initShowFirstButton={initShowFirstButton}
 	initShowLastButton={initShowLastButton}
-  showCurrentPageLabel={showCurrentPageLabel}
+	showCurrentPageLabel={showCurrentPageLabel}
 	on:change={pageChangeHandler} />
 ```
 
