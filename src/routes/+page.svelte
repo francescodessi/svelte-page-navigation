@@ -92,7 +92,8 @@
 				initShowLastButton={initShowLastButton}
 				showCurrentPageLabel={showCurrentPageLabel}
 				on:change={pageChangeHandler} />
-		</div>
+			<div style="margin: 24px 10px 0 0; text-align: right;"><small>Try resizing the width</small></div>
+		</div>		
 
         <div class="grid">
             <label for="pages">
@@ -157,6 +158,11 @@
 	.paginator-container {
 		text-align: center;
 		margin: 2rem auto;
+		min-width: 230px;
+		max-width: 100%;
+		border: 1px solid;
+		resize: horizontal;
+  		overflow: auto;
 	}
 
 	.error {
