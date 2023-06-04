@@ -64,13 +64,17 @@ A simple Svelte component for handling pagination, nothing more. Corrections and
 
 [![SvelteKit][svelteKit-shield]][SvelteKit-url]
 
+The <a href="https://francescodessi.github.io/svelte-page-navigation/" target="_blank">demo app</a> utilizes <a href="https://picocss.com/" target="_blank">Pico.css</a> as its styling framework.
 
 The SVG icons used in this project are retrieved from <a href="https://iconify.design/" target="_blank">Iconify</a>, specifically the following icons:
+- <a href="https://icon-sets.iconify.design/material-symbols/dark-mode-outline/" target="_blank">material-symbols:dark-mode-outline</a>
+- <a href="https://icon-sets.iconify.design/material-symbols/light-mode-outline/" target="_blank">material-symbols:light-mode-outline</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/chevron-left/" target="_blank">material-symbols:chevron-left</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/chevron-right/" target="_blank">material-symbols:chevron-right</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/first-page/" target="_blank">material-symbols:first-page</a>
 - <a href="https://icon-sets.iconify.design/material-symbols/last-page/" target="_blank">material-symbols:last-page</a>
 - <a href="https://icon-sets.iconify.design/?query=material-symbols%3Amore-horiz" target="_blank">material-symbols:more-horiz</a>
+- <a href="https://icon-sets.iconify.design/mdi/github/" target="_blank">mdi:github</a>
 
 
 <!-- GETTING STARTED -->

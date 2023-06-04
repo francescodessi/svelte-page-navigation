@@ -16,12 +16,15 @@
     export let customPaginatorButton = undefined;
 
     let nav;
-    let chunkSize = initChunkSize;
-    let chunks = [];    
+    let chunkSize = 0;
+    let chunks = [];
     let currentChunk = 0;
-    let showFirstButton = initShowFirstButton;
-    let showLastButton = initShowLastButton;
+    let showFirstButton = true;
+    let showLastButton = true;
 
+    $: showFirstButton = initShowFirstButton;
+    $: showLastButton = initShowLastButton;
+    $: chunkSize = initChunkSize;
     $: chunks = arrayChunks(getArrayOfNumbers(pages), chunkSize);
     $: currentChunk = chunks.findIndex(chunk => chunk.includes(currentPage));
     $: dispatch('change', {page: currentPage});
