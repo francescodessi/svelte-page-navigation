@@ -12,6 +12,7 @@
     export let initChunkSize = pages;
     export let initShowFirstButton = true;
     export let initShowLastButton = true;
+    export let showCurrentPageLabel = false;
     export let customPaginatorButton = undefined;
 
     let nav;
@@ -86,7 +87,7 @@
         {#if chunks.length > 0}
             {#each chunks[currentChunk] as page (page)}
                 <div>
-                    <svelte:component this={customPaginatorButton ?? PaginatorButton} active={page === currentPage} page={page} on:click={jumpToPage}>
+                    <svelte:component this={customPaginatorButton ?? PaginatorButton} active={page === currentPage} page={page} on:click={jumpToPage} title={page + 1}>
                         {page + 1}
                     </svelte:component>
                 </div>
@@ -115,9 +116,11 @@
             </div>
         {/if}
     </nav>
-    <div align="center">
-        {currentPage + 1} of {pages}
-    </div>
+    {#if showCurrentPageLabel}
+        <div align="center">
+            {currentPage + 1} of {pages}
+        </div>
+    {/if}
 {/if}
 
 <style>

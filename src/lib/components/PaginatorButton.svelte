@@ -5,7 +5,6 @@
     export let active = false;
 </script>
 
-
 <button type="button" disabled={disabled} data-page={page} class:active={active} title={title} on:click>
     <slot></slot>
 </button>
@@ -25,13 +24,16 @@
         cursor: pointer;
         background-color: #1095c1;
         color: #f0f0f0;
+        word-break: break-all;
+        overflow: hidden;
+        transition: background-color, opacity 0.15s ease;
     }
 
-    button:hover{
+    button:hover {
         background-color: #07aee5;
     }
 
-    button:active{
+    button:active {
         transform: scale(0.95);
     }
 

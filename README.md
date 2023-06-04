@@ -44,7 +44,8 @@
     <li>
       <a href="#usage">Usage</a>
       <ul>
-        <li><a href="#todo">todo</a></li>
+        <li><a href="#basic-example">Basic example</a></li>
+        <li><a href="#custom-button-example">Custom button example</a></li>
       </ul>
     </li>
   </ol>
@@ -97,23 +98,26 @@ The `Paginator` component is the main component that implements pagination and p
 * **`initChunkSize`**: a number indicating the size of page grouping. If this number is smaller than the total number of pages and the available space is sufficient, then the page navigation buttons will be displayed in groups of size equal to `initChunkSize`. Its default value is equal to the total number of pages set with the `pages` property.
 * **`initShowFirstButton`**: a boolean that, when set to `true`, enables displaying a button to directly navigate to the first page. The default value is `true`.
 * **`initShowLastButton`**: a boolean that, when set to `true`, enables displaying a button to directly navigate to the last page. The default value is `true`.
+* **`showCurrentPageLabel`**: a boolean that, when set to `true`, enables displaying a label with the current page number. The default value is `false`.
 * **`customPaginatorButton`**: it allows to specify a custom component that represents the button used by `Paginator` component.
 
 If there is enough available space, the `Paginator` component will display all the buttons for the pages (based on the values set for the `pages` and `initChunkSize` properties). Otherwise, it will automatically reduce the number of visible buttons.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-Below is a basic example:
+
+### Basic example
 
 ```js
 <script>
 	import {Paginator} from '@dflare/svelte-page-navigation';
 	
 	let pages = 20;
-	let currentPage = 0; // It can be omitted if you want to use the default value of 0 
+	let currentPage = 6; // It can be omitted if you want to use the default value of 0 (Zero-based numbering)
 	let initChunkSize = 10;
 	let initShowFirstButton = true; // It can be omitted if you want to use the default value of true 
-	let initShowLastButton = true; // It can be omitted if you want to use the default value of true 
+	let initShowLastButton = true; // It can be omitted if you want to use the default value of true
+  let showCurrentPageLabel = true; // It can be omitted if you want to use the default value of false
 
 	function pageChangeHandler(event) {
 		currentPage = event.detail.page;
@@ -130,11 +134,106 @@ Below is a basic example:
 	initChunkSize={initChunkSize}
 	initShowFirstButton={initShowFirstButton}
 	initShowLastButton={initShowLastButton}
+  showCurrentPageLabel={showCurrentPageLabel}
 	on:change={pageChangeHandler} />
 ```
 
+**Result**
+
+![paginator-screenshot-2]
+
+
 <p align="right">(<a href="https://svelte.dev/repl/9aaf93575c8f45c2ae5525f6f1dc3874?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
+### Custom button example
+To create a completely custom button, it is sufficient to create a new component that has the structure and properties of the <a href="https://github.com/francescodessi/svelte-page-navigation/blob/main/src/lib/components/PaginatorButton.svelte#L1" target="_blank">PaginatorButton</a> default component. The custom component should be passed to the `Paginator` component, which will use it instead of the default one.
+
+**App.svelte**
+
+```js
+<script>
+    import {Paginator} from '@dflare/svelte-page-navigation';
+    import CustomButton from './CustomButton.svelte';
+	
+    let pages = 20;
+    let currentPage = 6;
+    let initChunkSize = 10;
+
+    function pageChangeHandler(event) {
+      currentPage = event.detail.page;
+    }
+</script>
+
+<div>
+	Current Page: {currentPage + 1}
+</div>
+
+<Paginator
+    customPaginatorButton={CustomButton}
+    pages={pages}
+    currentPage={currentPage}
+    initChunkSize={initChunkSize}
+    on:change={pageChangeHandler} />
+```
+
+**CustomButton.svelte**
+```js
+<script>
+    export let title = undefined;
+    export let disabled = false;
+    export let page = undefined;
+    export let active = false;
+</script>
+
+<button type="button" disabled={disabled} data-page={page} class:active={active} title={title} on:click>
+    <slot></slot>
+</button>
+
+<style>
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        width: 75px;
+        height: 75px;
+        padding: 0.75rem 1rem;
+        border: 0;
+        margin: 0;        
+        border-radius: 50%;
+        text-align: center;
+        cursor: pointer;
+        background-color: #1095c1;
+        color: #f0f0f0;
+        word-break: break-all;
+        overflow: hidden;
+        transition: background-color, opacity 0.15s ease;
+    }
+
+    button:hover {
+        background-color: #07aee5;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    button[disabled] {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    button.active {
+        background-color: #4CAF50;
+        font-weight: bold;
+    }
+</style>
+```
+
+**Result**
+
+![paginator-screenshot-3]
+
+<p align="right">(<a href="https://svelte.dev/repl/e571a22de5804b8299e5c5ec28b6fd8c?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
 
 <!-- LICENSE -->
 ## License
@@ -153,3 +252,5 @@ Distributed under the MIT License. See [LICENSE.md][license-url] for more inform
 [svelteKit-shield]: https://img.shields.io/badge/SvelteKit-4A4A55?style=for-the-badge&logo=svelte
 [SvelteKit-url]: https://kit.svelte.dev/
 [paginator-screenshot-1]: https://github.com/francescodessi/svelte-page-navigation/raw/main/static/paginator-screenshot-1.png
+[paginator-screenshot-2]: https://github.com/francescodessi/svelte-page-navigation/raw/main/static/paginator-screenshot-2.png
+[paginator-screenshot-3]: https://github.com/francescodessi/svelte-page-navigation/raw/main/static/paginator-screenshot-3.png
