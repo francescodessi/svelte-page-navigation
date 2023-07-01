@@ -1,6 +1,6 @@
 {
 	"name": "@dflare/svelte-page-navigation",
-	"version": "0.0.4",
+	"version": "1.0.0",
 	"description": "A simple Svelte component to handle pagination",
 	"keywords": [
 		"pagination",
