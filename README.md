@@ -147,7 +147,7 @@ If there is enough available space, the `Paginator` component will display all t
 ![paginator-screenshot-2]
 
 
-<p align="right">(<a href="https://svelte.dev/repl/9aaf93575c8f45c2ae5525f6f1dc3874?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/9aaf93575c8f45c2ae5525f6f1dc3874" target="_blank">Try it on Svelte REPL</a>)</p>
 
 ### Custom button example
 To create a completely custom button, it is sufficient to create a new component that has the structure and properties of the <a href="https://github.com/francescodessi/svelte-page-navigation/blob/main/src/lib/components/PaginatorButton.svelte#L1" target="_blank">PaginatorButton</a> default component. The custom component should be passed to the `Paginator` component, which will use it instead of the default one.
@@ -237,7 +237,7 @@ To create a completely custom button, it is sufficient to create a new component
 
 ![paginator-screenshot-3]
 
-<p align="right">(<a href="https://svelte.dev/repl/e571a22de5804b8299e5c5ec28b6fd8c?version=3.59.1" target="_blank">Try it on Svelte REPL</a>)</p>
+<p align="right">(<a href="https://svelte.dev/repl/e571a22de5804b8299e5c5ec28b6fd8c" target="_blank">Try it on Svelte REPL</a>)</p>
 
 <!-- LICENSE -->
 ## License
