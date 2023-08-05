@@ -1,4 +1,4 @@
-# Svelte Enhanced Notifications
+# Svelte Page Navigation
 
 <!-- SHIELDS -->
 [![MIT License][license-shield]][license-url]
