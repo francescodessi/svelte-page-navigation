@@ -5,7 +5,8 @@ on:
     types: [published]
 
 permissions:
-	id-token: write
+  contents: read
+  id-token: write
 
 jobs:
   publish-npm:
