@@ -27,6 +27,8 @@
 	let frame = 0;
 	let generation = 0;
 	const handledClicks = new WeakSet();
+	/** @type {unknown[]} */
+	let layoutInputs = [];
 
 	$: total = pageCount(pages);
 	$: currentPage = clampPage(currentPage, total);
@@ -93,11 +95,29 @@
 	async function adjustChunks(id) {
 		const node = nav;
 		if (!node || id !== generation) return;
-		showFirstButton = initShowFirstButton;
-		showLastButton = initShowLastButton;
+		const inputs = [
+			node,
+			node.clientWidth,
+			total,
+			initChunkSize,
+			initShowFirstButton,
+			initShowLastButton,
+			customPaginatorButton
+		];
+		const reset = inputs.some((value, index) => value !== layoutInputs[index]);
+		// Keep the fitted group on page changes. Probing recreates keyed buttons,
+		// which restarts hover/focus styles even if every tick precedes a paint.
+		if (!reset && !wrapped(node)) return;
+		layoutInputs = [];
+		if (reset) {
+			showFirstButton = initShowFirstButton;
+			showLastButton = initShowLastButton;
+		}
 		// Each wrapper occupies at least one CSS pixel; bound temporary allocations.
 		let low = 0;
-		let high = Math.min(pageCount(initChunkSize), total, Math.ceil(node.clientWidth));
+		let high = reset
+			? Math.min(pageCount(initChunkSize), total, Math.ceil(node.clientWidth))
+			: chunkSize;
 		while (low < high) {
 			chunkSize = Math.ceil((low + high) / 2);
 			await tick();
@@ -112,6 +132,7 @@
 			showFirstButton = false;
 			showLastButton = false;
 		}
+		layoutInputs = inputs;
 	}
 
 	/** @param {HTMLElement} node */

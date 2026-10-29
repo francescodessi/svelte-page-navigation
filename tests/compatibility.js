@@ -148,10 +148,31 @@ try {
 					await expect(page.getByTestId('page')).toHaveText('1');
 					await expect(page.getByTestId('callbacks')).toHaveText('2');
 					if (mode === 'Legacy') await expect(page.getByTestId('events')).toHaveText('2');
+					// A page change within the fitted group must retain every button.
+					// Watch across animation frames, when responsive fitting runs.
+					await page.evaluate(
+						() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))
+					);
+					const buttons = await page.getByRole('navigation').getByRole('button').elementHandles();
+					const numbered = await page
+						.getByRole('navigation')
+						.locator('button[data-page="2"][title="3"]')
+						.count();
+					if (numbered) {
+						await click('Next');
+						await expect(page.getByTestId('page')).toHaveText('2');
+						await page.evaluate(
+							() => new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)))
+						);
+						for (const button of buttons)
+							expect(await button.evaluate((node) => node.isConnected)).toBe(true);
+						await click('Previous');
+						await expect(page.getByTestId('page')).toHaveText('1');
+					}
 					await click('Custom');
 					await click('Next');
 					await expect(page.getByTestId('page')).toHaveText('2');
-					await expect(page.getByTestId('callbacks')).toHaveText('3');
+					await expect(page.getByTestId('callbacks')).toHaveText(numbered ? '5' : '3');
 					await click('Jump');
 					await expect(page.getByTestId('page')).toHaveText('19');
 					await click('Shrink');
