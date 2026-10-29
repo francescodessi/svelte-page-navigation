@@ -304,17 +304,6 @@ For a custom button written with runes, keep the same props and use `onclick` an
 
 Pass this component through `customPaginatorButton`, exactly as in the original example. The library supplies both the legacy click event listener and the callback prop. Custom buttons should preserve `data-page`, forward the native click event and render the supplied content. The default button adds an accessible label, current-page semantics and a visible keyboard focus indicator.
 
-### Developing this repository
-
-Development uses Node.js 24 LTS (24.15 or later) and npm 12.2.1. These tooling requirements do not change the Svelte versions supported by the published component.
-
-```sh
-npm ci
-npm run dev
-```
-
-Use `npm run lint`, `npm run check`, `npm test` and `npm run build` for formatting, linting, Svelte/TypeScript checks, unit tests and production/package builds. Install the test browser with `npx playwright install chromium`, then run `npm run test:compat` for the Svelte compatibility matrix and `npm run test:browser` for the demo on desktop and mobile. `npm run package` builds only the library.
-
 <!-- LICENSE -->
 
 ## License
