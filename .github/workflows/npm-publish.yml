@@ -1,30 +1,73 @@
-name: Publish to NPM
+name: Stage package on npm
 
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to stage using this workflow
+        required: true
+        type: string
 
 permissions:
   contents: read
-  id-token: write
+
+concurrency:
+  group: npm-stage
+  cancel-in-progress: false
 
 jobs:
-  publish-npm:
+  stage:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      # Dispatch from main to retry an old tag with the current workflow.
+      - uses: actions/checkout@v7.0.1
         with:
-          node-version: '20.x'
-          registry-url: https://registry.npmjs.org/
-
-      - name: Install dependencies and build
-        run: npm ci && npm run package
-        
-      - name: Publish package on NPM
-        run: npm publish --provenance --access public
+          ref: ${{ inputs.tag || github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: actions/setup-node@v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - run: npm install --global npm@12.2.1
+      - name: Validate tag, package identity and unpublished version
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          RELEASE_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFileSync, appendFileSync } from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const p = JSON.parse(readFileSync('package.json', 'utf8'));
+          const tag = process.env.RELEASE_TAG;
+          if (!/^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(tag) || tag !== `v${p.version}`) throw Error('Tag/version mismatch');
+          const tagged = execFileSync('git', ['rev-parse', '--verify', `refs/tags/${tag}^{commit}`], { encoding: 'utf8' }).trim();
+          const head = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+          if (head !== tagged) throw Error('Checkout is not the requested existing tag');
+          if (p.name !== '@dflare/svelte-page-navigation' || !/^https:\/\/github\.com\/francescodessi\/svelte-page-navigation(?:\.git)?$/.test(p.repository.url.replace(/^git\+/, ''))) throw Error('Unexpected package/repository');
+          const response = await fetch(`https://registry.npmjs.org/${encodeURIComponent(p.name)}/${p.version}`);
+          if (response.ok) throw Error('Version is already published');
+          if (response.status !== 404) throw Error(`Registry check failed: ${response.status}`);
+          appendFileSync(process.env.GITHUB_ENV, `NPM_DIST_TAG=${p.version.includes('-') ? 'next' : 'latest'}\n`);
+          NODE
+      - run: npm ci
+      - run: npm run lint --if-present
+      - run: npm run check --if-present
+      - run: npm test --if-present
+      - run: npm run build
+        env:
+          BASE_PATH: /svelte-page-navigation
+      - run: npx playwright install --with-deps chromium
+        if: hashFiles('tests/compatibility.js') != ''
+      - run: npm run test:compat --if-present
+      - run: npm run test:browser --if-present
+        env:
+          BASE_PATH: /svelte-page-navigation
+      - run: npm pack --dry-run
+      - name: Verify staged publishing is supported
+        run: npm stage --help | grep -q 'stage'
+      - name: Stage for manual approval on npm
+        run: npm stage publish --access public --tag "$NPM_DIST_TAG"
